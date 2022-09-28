@@ -1,0 +1,40 @@
+<% if user_signed_in? %>
+  <div class="body-content">
+    <% if @top_streams.present? %>
+      <h3 class="text-center">Trending today...</h3>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Game Name</th>
+            <th>Broadcaster</th>
+            <th>Viewers</th>
+            <th>Language</th>
+            <th>Streaming Since</th>
+          </tr>
+        </thead>
+        <tbody>    
+          <% @top_streams.each do |stream| 
+            is_live = stream['is_live'].present?%>
+            <tr class="<%= is_live && 'table-success'%>">
+              <td>
+                <%= image_tag(thumbnail_url(stream['thumbnail_url']), size: "50x50")%>
+                <%= stream['game_name'].titleize %>
+                <span class="badge bg-danger"><%= stream['type'].capitalize %></span>  
+              </td>
+              <td><%= stream['user_name'] %></td>
+              <td><%= stream['viewer_count'] %></td>
+              <td><%= stream['language'] %></td>
+              <td><%= formated_time(stream['started_at']) %></td>
+            </tr>  
+          <%end%>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+<% else %>
+  <center>
+    <h3>Hello World!!!</h3>
+    <p>Please Login/Sign Up to proceed..</p>
+  </center>
+<% end %>

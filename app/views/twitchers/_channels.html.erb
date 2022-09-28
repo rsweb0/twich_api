@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Display Name</th>
+      <th>Broadcasting Game</th>
+      <th>Language</th>
+      <th>Streaming Since</th>
+    </tr>
+  </thead>
+  <tbody>    
+    <% streams.each do |stream| 
+      is_live = stream['type'] == 'live'%>
+      <tr class="<%= is_live && 'table-success'%>">
+        <td>
+        <%= link_to twitch_game_path(stream['user_login']), target: "_blank" do%>
+          <%= image_tag(thumbnail_url(stream['thumbnail_url']), size: "50x50")%>
+          <%= stream['title'].titleize %>
+          <span class="badge bg-danger"><%= 'Live' if is_live %></span>  
+          <span class="badge bg-warning"><%= 'In Top 20' if stream['in_top_20'] %></span>
+        <%end%>
+        </td>
+        <td><%= stream['game_name'] %></td>
+        <td><%= stream['language'] %></td>
+        <td><%= formated_time(stream['started_at']) %></td>
+      </tr>  
+    <%end%>
+  </tbody>
+</table>

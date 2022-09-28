@@ -1,0 +1,8 @@
+<% if flash.any? %>
+  <% flash.each do |name, message| %>
+    <div class="alert alert-<%= flash_class(name) %> alert-dismissible text-center" id = "pop-alert">
+      <%= message %>
+    </div>
+  <% end %>
+  <% flash.discard %>
+<% end %>
